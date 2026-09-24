@@ -1,0 +1,23 @@
+table test1
+	lineageTag: 1af37306-5805-4297-ada3-e11d81dcb33e
+
+	column Value
+		dataType: int64
+		formatString: 0
+		lineageTag: 5b151846-5155-4907-893f-d01620137511
+		summarizeBy: sum
+		sourceColumn: Value
+
+		annotation SummarizationSetBy = Automatic
+
+	partition test1 = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("ukfeclcntg3eff2dybf66qv6jy-xi2tus6rae2epgk5omgps6sppa.datawarehouse.fabric.microsoft.com", "Test"),
+				    dbo_test1 = Source{[Schema="dbo",Item="test1"]}[Data]
+				in
+				    dbo_test1
+
+	annotation PBI_ResultType = Table
+

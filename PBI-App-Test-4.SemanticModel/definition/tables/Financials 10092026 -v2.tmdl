@@ -1,0 +1,39 @@
+table 'Financials 10092026 -v2'
+	lineageTag: 2615d014-c44e-4e6f-9646-cad64c175493
+
+	column Column1
+		dataType: string
+		lineageTag: 329e5825-965d-4831-a2aa-4a4ae97511bf
+		summarizeBy: none
+		sourceColumn: Column1
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column2
+		dataType: string
+		lineageTag: 5711a4bd-5811-417d-9295-2f6e93085b73
+		summarizeBy: none
+		sourceColumn: Column2
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column3
+		dataType: string
+		lineageTag: 3ce4583e-218c-4054-b313-fd46c7f6281c
+		summarizeBy: none
+		sourceColumn: Column3
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Financials 10092026 -v2' = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("D:\1current\Financials 10092026 -v3.xlsx"), null, true),
+				    #"Financials 10092026 -v2_Sheet" = Source{[Item="Financials 10092026 -v2",Kind="Sheet"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(#"Financials 10092026 -v2_Sheet",{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
